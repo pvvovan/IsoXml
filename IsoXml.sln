@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsoXmlGui", "IsoXmlGui\IsoXmlGui.csproj", "{D9D73C62-7A7A-4B31-88F1-EB6742F0F8CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsoXml", "IsoXml\IsoXml.csproj", "{93B18BEE-D5C5-483D-81C7-09B4A7B61E9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgGPS", "AgGPS\AgGPS.csproj", "{100B67C9-1C65-4877-AFEA-307F3C22520C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9D73C62-7A7A-4B31-88F1-EB6742F0F8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9D73C62-7A7A-4B31-88F1-EB6742F0F8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9D73C62-7A7A-4B31-88F1-EB6742F0F8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9D73C62-7A7A-4B31-88F1-EB6742F0F8CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B18BEE-D5C5-483D-81C7-09B4A7B61E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B18BEE-D5C5-483D-81C7-09B4A7B61E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B18BEE-D5C5-483D-81C7-09B4A7B61E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B18BEE-D5C5-483D-81C7-09B4A7B61E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100B67C9-1C65-4877-AFEA-307F3C22520C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100B67C9-1C65-4877-AFEA-307F3C22520C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100B67C9-1C65-4877-AFEA-307F3C22520C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100B67C9-1C65-4877-AFEA-307F3C22520C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

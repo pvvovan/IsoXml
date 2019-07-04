@@ -42,6 +42,15 @@
     <Reference Include="DotSpatial.Data">
       <HintPath>..\DotSpatial.Data.dll</HintPath>
     </Reference>
+    <Reference Include="DotSpatial.Mono">
+      <HintPath>..\DotSpatial.Mono.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Projections">
+      <HintPath>..\DotSpatial.Projections.dll</HintPath>
+    </Reference>
+    <Reference Include="DotSpatial.Serialization">
+      <HintPath>..\DotSpatial.Serialization.dll</HintPath>
+    </Reference>
     <Reference Include="DotSpatial.Topology">
       <HintPath>..\DotSpatial.Topology.dll</HintPath>
     </Reference>
@@ -66,6 +75,7 @@
     <Compile Include="Model\InnerBoundary.cs" />
     <Compile Include="Model\OuterBoundary.cs" />
     <Compile Include="Model\Prescription.cs" />
+    <Compile Include="Model\SyncId.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Client.cs" />
@@ -88,6 +98,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

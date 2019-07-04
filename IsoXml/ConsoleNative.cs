@@ -44,6 +44,7 @@ namespace IsoXml
             public string InputDirectory;
             public string OutputDirectory;
             public bool ShouldConvert;
+            public bool ShouldOpenDirectory;
         }
 
         public static InteractionResult GetDirectories(string[] inputArguments)
@@ -61,6 +62,7 @@ namespace IsoXml
                 }
 
             res.ShouldConvert = true;
+            res.ShouldOpenDirectory = true;
             if (inputArguments.Count() == 4)
             {
                 if (inputArguments[0].ToLower() == "-i" && inputArguments[2].ToLower() == "-o")
@@ -73,6 +75,7 @@ namespace IsoXml
                     res.InputDirectory = inputArguments[3];
                     res.OutputDirectory = inputArguments[1];
                 }
+                res.ShouldOpenDirectory = false;
             }
 
             return res;

@@ -1,0 +1,15 @@
+﻿<Window x:Class="IsoXmlGui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="IsoXml &lt;-&gt; AgGps" Height="135" Width="525">
+    <Grid>
+        <Button Name="btnInput" Content="Source" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="57" Click="btnInput_Click"/>
+        <Button x:Name="btnOutput" Content="Output" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="57" Click="btnOutput_Click"/>
+        <Button x:Name="btnToAgGps" Content="To AgGPS" HorizontalAlignment="Left" Margin="72,65,0,0" VerticalAlignment="Top" Width="100" Click="btnToAgGps_Click" IsEnabled="False"/>
+        <TextBox x:Name="txtBoxSource" IsReadOnly="True" Height="23" Margin="72,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBoxOutput" IsReadOnly="True" Height="23" Margin="72,37,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Button x:Name="btnToIsoXml" Content="To IsoXml" HorizontalAlignment="Right" Margin="0,65,10,0" VerticalAlignment="Top" Width="100" Click="btnToIsoXml_Click" IsEnabled="False" />
+
+
+    </Grid>
+</Window>

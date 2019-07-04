@@ -16,8 +16,8 @@ namespace AgGPS
         [STAThread]
         static void Main(string[] inputArguments)
         {
-            //try
-            //{
+            try
+            {
                 string currentDir = null;
                 string agGpsDir = null;
 
@@ -45,16 +45,17 @@ namespace AgGPS
 
                 Form1.ConvertToAgGPS(currentDir, agGpsDir);
 
-                Process.Start("explorer.exe", agGpsDir + "\\AgGPS");
-            //}
-            //catch (Exception ex)
-            //{
-            //    StreamWriter wr = new StreamWriter("errorAg.txt");
-            //    wr.WriteLine(ex.Message);
-            //    wr.WriteLine(ex.StackTrace);
-            //    wr.Flush();
-            //    wr.Close();
-            //}
+                if (res.ShouldOpenDirectory)
+                    Process.Start("explorer.exe", agGpsDir + "\\AgGPS");
+            }
+            catch (Exception ex)
+            {
+                StreamWriter wr = new StreamWriter("errorAg.txt");
+                wr.WriteLine(ex.Message);
+                wr.WriteLine(ex.StackTrace);
+                wr.Flush();
+                wr.Close();
+            }
 
 
             //Application.EnableVisualStyles();

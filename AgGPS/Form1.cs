@@ -105,6 +105,7 @@ namespace AgGPS
                                 Name = xcl.B,
                                 Farms = new List<IsoXml.Model.Farm>()
                             });
+                            IsoXml.Model.SyncId.Instance.Clients[xcl.B] = xcl.A;
                         }                        
                     }
                 }
@@ -112,12 +113,15 @@ namespace AgGPS
             }
 
             if (clients.Count == 0)
+            {
                 clients.Add(new IsoXml.Model.Client()
                 {
                     ID = "1",
                     Name = "UnnamedClient",
                     Farms = new List<IsoXml.Model.Farm>()
                 });
+                IsoXml.Model.SyncId.Instance.Clients[clients[0].Name] = clients[0].ID;
+            }
 
             // parse farms
             serializer = new XmlSerializer(typeof(IsoXml.XML.farm.FRM));
@@ -141,6 +145,7 @@ namespace AgGPS
                                 ID = xfa.A,
                                 Name = xfa.B
                             };
+                            IsoXml.Model.SyncId.Instance.Farms[farm.Name] = farm.ID;
                             string cl_Id = xfa.I;
                             bool added = false;
                             foreach (var cl in clients)
@@ -182,6 +187,7 @@ namespace AgGPS
                                 AB_Lines = new List<IsoXml.Model.AB_Line>(),
                                 OuterBoundaries = new List<IsoXml.Model.OuterBoundary>()
                             };
+                            IsoXml.Model.SyncId.Instance.Fields[field.Name] = field.ID;
                             string farm_id = xfi.F;
                             foreach (var cl in clients)
                                 foreach (var fa in cl.Farms)
@@ -474,6 +480,8 @@ namespace AgGPS
                 { }
             }
 
+            IsoXml.Model.SyncId.Instance.Save();
+
 
             // Generate AgGPS data
 
@@ -623,44 +631,52 @@ namespace AgGPS
                             fs.Dispose();
                         }
 
-                        string prescriptionDir = Path.Combine(AgGpsPath, "AgGPS\\Prescriptions\\");
-                        if (!Directory.Exists(prescriptionDir))
-                            Directory.CreateDirectory(prescriptionDir);
-                        int count = 0;
-                        if (field.Prescriptions != null)
-                            foreach (var pres in field.Prescriptions)
-                            {
-                                count++;
-                                string prescriptionFile = Path.Combine(prescriptionDir,
-                                    RemoveInvalidPathCharacters(
-                                    cli.Name + "_" + farm.Name + "_" + field.Name + "_" + count.ToString() + ".shp", "_"));
-                                Feature f = new Feature();
-                                FeatureSet fs = new FeatureSet(f.FeatureType);
-                                foreach (var col in pres.Cells[0].Attribute)
-                                    fs.DataTable.Columns.Add(new DataColumn(col.Key, typeof(double)));
+                        string prescriptionDirAgGPS = Path.Combine(AgGpsPath, "AgGPS\\Prescriptions\\");
+                        GeneratePrescriptions(cli, farm, field, prescriptionDirAgGPS);
 
-                                foreach (var cell in pres.Cells)
-                                {
-                                    List<Coordinate> coords = new List<Coordinate>();
-                                    foreach (var p in cell.CellPoints)
-                                        coords.Add(new Coordinate(p.Longitude, p.Latitude));
-                                    IFeature feature = fs.AddFeature(new Polygon(coords));
-
-                                    foreach (var att in cell.Attribute)
-                                        if (!fs.DataTable.Columns.Contains(att.Key))
-                                            fs.DataTable.Columns.Add(new DataColumn(att.Key, typeof(double)));
-
-                                    feature.DataRow.BeginEdit();
-                                    foreach (var att in cell.Attribute)
-                                        feature.DataRow[att.Key] = att.Value;
-                                    feature.DataRow.EndEdit();
-                                }
-                                fs.SaveAs(prescriptionFile, true);
-                                fs.Dispose();
-                            }
+                        string prescriptionDirPIQ = Path.Combine(AgGpsPath, "AgData\\Prescriptions\\");
+                        GeneratePrescriptions(cli, farm, field, prescriptionDirPIQ);
                     }
                 }
             }
+        }
+
+        private static void GeneratePrescriptions(IsoXml.Model.Client cli, IsoXml.Model.Farm farm, IsoXml.Model.Field field, string prescriptionDir)
+        {
+            if (!Directory.Exists(prescriptionDir))
+                Directory.CreateDirectory(prescriptionDir);
+            int count = 0;
+            if (field.Prescriptions != null)
+                foreach (var pres in field.Prescriptions)
+                {
+                    count++;
+                    string prescriptionFile = Path.Combine(prescriptionDir,
+                        RemoveInvalidPathCharacters(
+                        cli.Name + "_" + farm.Name + "_" + field.Name + "_" + count.ToString() + ".shp", "_"));
+                    Feature f = new Feature();
+                    FeatureSet fs = new FeatureSet(f.FeatureType);
+                    foreach (var col in pres.Cells[0].Attribute)
+                        fs.DataTable.Columns.Add(new DataColumn(col.Key, typeof(double)));
+
+                    foreach (var cell in pres.Cells)
+                    {
+                        List<Coordinate> coords = new List<Coordinate>();
+                        foreach (var p in cell.CellPoints)
+                            coords.Add(new Coordinate(p.Longitude, p.Latitude));
+                        IFeature feature = fs.AddFeature(new Polygon(coords));
+
+                        foreach (var att in cell.Attribute)
+                            if (!fs.DataTable.Columns.Contains(att.Key))
+                                fs.DataTable.Columns.Add(new DataColumn(att.Key, typeof(double)));
+
+                        feature.DataRow.BeginEdit();
+                        foreach (var att in cell.Attribute)
+                            feature.DataRow[att.Key] = att.Value;
+                        feature.DataRow.EndEdit();
+                    }
+                    fs.SaveAs(prescriptionFile, true);
+                    fs.Dispose();
+                }
         }
 
         private static void fillAttribute(IsoXml.Model.PrescriptionAttribute att, List<IsoXml.XML.ISO11783_TaskDataVPN> xScalings, List<IsoXml.XML.ISO11783_TaskDataPDT> xProducts, IsoXml.XML.PDV pdv)
